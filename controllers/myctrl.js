@@ -24,4 +24,8 @@ app.controller("myctrl", function ($scope) {
     $scope.credentials = { username: "", password: "" };
     $scope.loginError = false;
   };
+
+  $scope.isActive = function (viewLocation) {
+    return viewLocation === $location.path();
+  };
 });

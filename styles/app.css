@@ -1,0 +1,207 @@
+:root {
+  --brand-gradient: linear-gradient(145deg, #1a73e8 0%, #0d47a1 100%);
+  --bg-color: #f0f4f8;
+  --sidebar-width: 280px;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-color);
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* ── Shared Brand Style (Login & Sidebar) ── */
+.lp-brand {
+  background: var(--brand-gradient);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  z-index: 1; /* Establish stacking context */
+}
+
+/* Decorative Shapes - Fixed to not block clicks */
+.lp-brand::before,
+.lp-brand::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  pointer-events: none; /* CRITICAL: Allows clicks to pass through to links */
+  z-index: -1; /* Sits behind the text/links */
+}
+
+.lp-brand::before {
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  left: -100px;
+}
+
+.lp-brand::after {
+  width: 200px;
+  height: 200px;
+  bottom: -50px;
+  right: -50px;
+}
+
+/* ── Login Specifics ── */
+.login-page {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-color);
+  z-index: 9999;
+}
+
+.lp-card {
+  display: flex;
+  width: 860px;
+  max-width: 95vw;
+  min-height: 520px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
+}
+
+.login-page .lp-brand {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  text-align: center;
+}
+
+.lp-form-panel {
+  flex: 1.1;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 52px 48px;
+}
+
+/* ── Sidebar Specifics ── */
+main .lp-brand {
+  width: var(--sidebar-width);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+/* ── Nav Links & Hovers ── */
+.nav-pills .nav-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+  border-radius: 12px;
+  margin-bottom: 4px;
+  padding: 12px 18px;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 2; /* Ensures links stay above background */
+}
+
+.nav-pills .nav-link:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #fff !important;
+  transform: translateX(8px);
+}
+
+.nav-pills .nav-link i {
+  width: 25px;
+  font-size: 1.1rem;
+}
+
+/* ── Dashboard Content ── */
+.main-content {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 25px;
+}
+
+.content-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  min-height: calc(100vh - 50px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Form Styling ── */
+.lp-input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.lp-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #adb5bd;
+}
+
+.lp-input-group input {
+  width: 100%;
+  padding: 12px 15px 12px 45px;
+  border: 1.5px solid #e9ecef;
+  border-radius: 12px;
+  background: #f8f9fa;
+  transition: 0.2s;
+}
+
+.lp-input-group input:focus {
+  border-color: #1a73e8;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.1);
+  outline: none;
+}
+
+.lp-btn {
+  background: var(--brand-gradient);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: 0.3s;
+  box-shadow: 0 4px 12px rgba(13, 71, 161, 0.3);
+}
+
+.lp-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(13, 71, 161, 0.4);
+}
+
+/* ── Sidebar Active State ── */
+
+/* When the link is active */
+.nav-pills .nav-link.active {
+  background-color: #ffffff !important; /* Solid white background */
+  color: #1a73e8 !important; /* Brand blue text */
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transform: translateX(10px); /* Keeps it slightly shifted to the right */
+}
+
+/* Ensure the icon changes color too when active */
+.nav-pills .nav-link.active i {
+  color: #1a73e8 !important;
+}
+
+/* Subtle left border/indicator for the active item */
+.nav-pills .nav-link.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20%;
+  height: 60%;
+  width: 4px;
+  background: #0d47a1;
+  border-radius: 0 4px 4px 0;
+}
