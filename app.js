@@ -32,7 +32,7 @@ app.config(function ($routeProvider) {
     })
     .when("/showProducts", {
       templateUrl: "views/showProducts.html",
-      controller: "",
+      controller: "productCtrl",
     })
     .when("/showShifts", {
       templateUrl: "views/showShifts.html",
@@ -43,6 +43,6 @@ app.config(function ($routeProvider) {
       controller: "",
     })
     .otherwise({
-      redirectTo: "/",
+      redirectTo: "/showProducts",
     });
 });
