@@ -63,7 +63,7 @@ app.controller("showUsersCtrl", function ($scope, UserService) {
           text: "User info saved successfully.",
           timer: 1500,
           showConfirmButton: false,
-        });
+        }).then(() => window.location.reload());
       })
       .catch(function (err) {
         console.error("Error updating user: ", err);
