@@ -54,7 +54,17 @@ app.controller("showUsersCtrl", function ($scope, UserService) {
   };
 
   $scope.saveUpdate = function (user) {
-    UserService.updateUser(user.usersID, user)
+    // 1. Create a clean object with ONLY database columns
+    var dataToUpdate = {
+      name: user.name,
+      userName: user.userName,
+      password: user.password,
+      // Add other database columns here if you have them,
+      // but DO NOT include usersID, isEditing, or originalData
+    };
+
+    // 2. Pass the clean object to the service
+    UserService.updateUser(user.usersID, dataToUpdate)
       .then(function () {
         user.isEditing = false;
         Swal.fire({
@@ -67,6 +77,7 @@ app.controller("showUsersCtrl", function ($scope, UserService) {
       })
       .catch(function (err) {
         console.error("Error updating user: ", err);
+        // Pro-tip: check err.data.message in the console to see the exact column error
         Swal.fire("Error", "Could not update user.", "error");
       });
   };

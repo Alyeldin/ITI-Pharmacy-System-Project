@@ -47,7 +47,7 @@ app.controller("userCtrl", function ($scope, $location, UserService) {
     $scope.isLoggedIn = false;
     $scope.credentials = { username: "", password: "" };
     $scope.loginError = false;
-
+    
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("currUser");
     localStorage.removeItem("username");
