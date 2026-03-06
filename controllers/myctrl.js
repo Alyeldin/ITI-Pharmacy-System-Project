@@ -25,7 +25,7 @@ app.controller("myctrl", function ($scope) {
     $scope.loginError = false;
   };
 
-  $scope.isActive = function (viewLocation) {
-    return viewLocation === $location.path();
-  };
+  // $scope.isActive = function (viewLocation) {
+  //   return viewLocation === $location.path();
+  // };
 });
