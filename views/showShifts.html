@@ -1,1 +1,100 @@
-<h1>Show Shifts</h1>
+<div class="container mt-4" ng-controller="showShiftsCtrl">
+    <div class="row mb-4">
+        <div class="col-12 d-flex align-items-center justify-content-between p-3 m-2 shadow rounded-4 bg-white">
+            <div class="d-flex align-items-center">
+                <i class="fa-solid fa-user-clock fa-2x text-primary me-3"></i>
+                <div>
+                    <h4 class="mb-0 fw-bold">Shift History</h4>
+                    <p class="text-muted mb-0 small">View login sessions, logout times, and shift durations for all
+                        users.</p>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-primary" ng-click="fetchShifts()" ng-disabled="isLoading">
+                    <i class="fa-solid fa-rotate-right me-1" ng-class="{'fa-spin': isLoading}"></i> Refresh
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-section mt-4">
+        <!-- Search Section -->
+        <div class="search-section mb-4">
+            <div class="input-group w-50 shadow-sm rounded">
+                <span class="input-group-text bg-white border-end-0"><i
+                        class="fa-solid fa-search text-muted"></i></span>
+                <input ng-model="search" type="text" class="form-control border-start-0 ps-0"
+                    placeholder="Search shifts by name or role..." />
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loader-container text-center py-5" ng-if="isLoading">
+            <div class="spinner-border text-primary shadow-sm" role="status" style="width: 3rem; height: 3rem;"></div>
+            <p class="mt-3 text-muted fw-semibold">Loading shift records...</p>
+        </div>
+
+        <!-- Data Table -->
+        <div ng-if="!isLoading" class="table-responsive shadow-sm rounded-3 bg-white">
+            <table class="table table-hover table-striped text-center align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="py-3">Name</th>
+                        <th class="py-3">Role</th>
+                        <th class="py-3">Login Time</th>
+                        <th class="py-3">Logout Time</th>
+                        <th class="py-3">Total Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="shift in shifts | filter:search">
+                        <!-- Name -->
+                        <td class="fw-semibold">{{ shift.userName }}</td>
+
+                        <!-- Role -->
+                        <td>
+                            <span class="badge" ng-class="(shift.role === 'admin') ? 'bg-danger' : 'bg-primary'">
+                                {{ shift.role | uppercase }}
+                            </span>
+                        </td>
+
+                        <!-- Login Time -->
+                        <td>
+                            <div ng-if="shift.loginTime">
+                                <span class="d-block">{{ shift.loginTime | date:'MMM dd, yyyy' }}</span>
+                                <span class="text-muted small fw-bold">{{ shift.loginTime | date:'hh:mm:ss a' }}</span>
+                            </div>
+                            <span ng-if="!shift.loginTime" class="text-muted fst-italic">Unknown</span>
+                        </td>
+
+                        <!-- Logout Time -->
+                        <td>
+                            <div ng-if="shift.logoutTime">
+                                <span class="d-block">{{ shift.logoutTime | date:'MMM dd, yyyy' }}</span>
+                                <span class="text-muted small fw-bold">{{ shift.logoutTime | date:'hh:mm:ss a' }}</span>
+                            </div>
+                            <span ng-if="!shift.logoutTime" class="badge bg-warning text-dark">Active Session</span>
+                        </td>
+
+                        <!-- Total Duration -->
+                        <td>
+                            <span ng-if="shift.shiftTime !== null && shift.shiftTime !== undefined" class="fw-bold">
+                                {{ shift.shiftTime }} hrs
+                            </span>
+                            <span ng-if="shift.shiftTime === null || shift.shiftTime === undefined"
+                                class="text-muted fst-italic">
+                                --
+                            </span>
+                        </td>
+                    </tr>
+                    <tr ng-if="shifts.length === 0">
+                        <td colspan="5" class="py-5 text-muted">
+                            <i class="fa-solid fa-bed fa-2x mb-2 text-secondary"></i>
+                            <p class="mb-0">No shift records found.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
