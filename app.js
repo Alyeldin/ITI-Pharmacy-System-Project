@@ -40,7 +40,7 @@ app.config(function ($routeProvider) {
     })
     .when("/showUsers", {
       templateUrl: "views/showUsers.html",
-      controller: "",
+      controller: "showUsersCtrl",
     })
     .otherwise({
       redirectTo: "/showProducts",
