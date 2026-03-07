@@ -1,1 +1,123 @@
-<h1>Show Customers</h1>
+<div class="container-fluid p-4 bg-light min-vh-100">
+    <div class="row pt-4">
+        <div class="col-12 px-4">
+
+            <!-- Page Header & Stats -->
+            <div class="d-flex justify-content-between align-items-end mb-4">
+                <div>
+                    <h2 class="fw-bold text-dark m-0">
+                        <i class="fa-solid fa-users text-primary me-2"></i>Customer Directory
+                    </h2>
+                    <p class="text-muted mb-0">Manage and view all registered pharmacy customers</p>
+                </div>
+
+                <!-- Summary Card -->
+                <div class="card border-0 shadow-sm rounded-4 bg-primary text-white" style="min-width: 200px;">
+                    <div class="card-body p-3 d-flex align-items-center">
+                        <div class="rounded-circle bg-white bg-opacity-25 p-3 me-3">
+                            <i class="fa-solid fa-user-group fa-lg"></i>
+                        </div>
+                        <div>
+                            <p class="small mb-0 opacity-75 text-uppercase fw-bold">Total Customers</p>
+                            <h3 class="fw-bold mb-0">{{ (customers | filter:searchQuery).length }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search & Actions -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-3">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="position-relative">
+                                <i
+                                    class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                                <input type="text" class="form-control ps-5 py-2 border-0 bg-light rounded-3"
+                                    placeholder="Search by name or phone number..." ng-model="searchQuery">
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <button class="btn btn-outline-primary rounded-3 px-4" ng-click="loadCustomers()"
+                                ng-disabled="isLoading">
+                                <i class="fa-solid fa-arrows-rotate me-2" ng-class="{'fa-spin': isLoading}"></i> Refresh
+                                List
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+                <div class="card-body p-0">
+
+                    <!-- Loading State -->
+                    <div class="loader-container p-5 text-center" ng-if="isLoading">
+                        <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+                        </div>
+                        <p class="text-muted fs-5 fw-medium">Fetching customer records...</p>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div class="p-5 text-center text-muted" ng-if="!isLoading && customers.length === 0">
+                        <i class="fa-solid fa-users-slash fa-4x mb-3 text-secondary opacity-50"></i>
+                        <h4>No Customers Found</h4>
+                        <p>Your database currently has no registered customers.</p>
+                    </div>
+
+                    <!-- Table Content -->
+                    <div class="table-responsive" ng-if="!isLoading && customers.length > 0">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead style="background-color: #f8f9fa;">
+                                <tr>
+                                    <th class="py-3 px-4 text-secondary text-uppercase"
+                                        style="font-size: 0.75rem; font-weight: 700; width: 80px;">#</th>
+                                    <th class="py-3 px-4 text-secondary text-uppercase"
+                                        style="font-size: 0.75rem; font-weight: 700;">Customer Identity</th>
+                                    <th class="py-3 px-4 text-secondary text-uppercase"
+                                        style="font-size: 0.75rem; font-weight: 700;">Contact Details</th>
+                                    <th class="py-3 px-4 text-secondary text-uppercase text-end"
+                                        style="font-size: 0.75rem; font-weight: 700;">Registration Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="customer in customers | filter:searchQuery" class="border-bottom">
+                                    <td class="px-4 py-3">
+                                        <span class="text-muted small fw-bold">#{{ $index + 1 }}</span>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center text-primary fw-bold me-3"
+                                                style="width: 45px; height: 45px; font-size: 1.1rem;">
+                                                {{ (customer.customerName || '?')[0].toUpperCase() }}
+                                            </div>
+                                            <div>
+                                                <div class="fw-bold text-dark">{{ customer.customerName || 'Anonymous
+                                                    Customer' }}</div>
+                                                <div class="small text-muted">Customer ID: {{ customer.customerID ||
+                                                    customer.id || 'N/A' }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <span class="badge bg-light text-dark border px-3 py-2 rounded-pill">
+                                            <i class="fa-solid fa-phone-volume text-primary me-2"></i>{{
+                                            customer.customerPhone || 'No Phone' }}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-end text-muted small">
+                                        <i class="fa-regular fa-calendar-days me-1"></i>
+                                        {{ customer.created_at | date:'mediumDate' }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
