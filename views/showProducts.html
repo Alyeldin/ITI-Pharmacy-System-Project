@@ -1,9 +1,9 @@
 <body ng-app="myApp" ng-controller="productController">
   <div>
     <!-- product cards -->
-    <div class="d-flex">
+    <div class="d-flex justify-content-between">
       <!-- Add product form -->
-      <div class="formsection col-6 p-2 m-1 shadow rounded-4">
+      <div class="formsection col-7 p-2 m-1 shadow rounded-4">
         <h4><i class="fa-solid fa-plus-circle me-2"></i> Add New Product</h4>
         <form ng-submit="addProduct()">
           <div class="form-row">
@@ -93,56 +93,70 @@
         </form>
       </div>
       <!-- create invoivce form -->
-      <div class="col-6 p-2 m-1 shadow rounded-4">
-        <h4><i class="fa-solid fa-plus-circle me-2"></i> Invoice</h4>
-        <!-- Button trigger modal -->
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
-          Launch demo modal
-        </button>
 
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="exampleModal"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                  Modal title
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">...</div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="button" class="btn btn-primary">
-                  Save changes
-                </button>
-              </div>
-            </div>
+      <div
+        class="col-5 p-2 m-1 shadow rounded-4 d-flex flex-column justify-content-between"
+      >
+        <div class="justify-content-start">
+          <h4><i class="fa-solid fa-plus-circle me-2"></i> Invoice</h4>
+          <div ng-show="!invTotal" class="p-5 mt-2 text-secondary fst-italic">
+            Start adding item from Medidicines table...
           </div>
+
+          <table
+            ng-show="invTotal"
+            class="table table-hover table-striped text-center"
+          >
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="invoiceItem in invoice">
+                <td>
+                  <button
+                    type="button"
+                    ng-click="removeItem($index)  "
+                    class="btn btn-danger"
+                  >
+                    Remove
+                  </button>
+                </td>
+
+                <td>{{invoiceItem.productName }}</td>
+                <td>{{invoiceItem.productQuantity }}</td>
+                <td>{{invoiceItem.productPrice }}</td>
+              </tr>
+              <tr>
+                <td colspan="2"><strong>Total</strong></td>
+                <td></td>
+                <td><strong>{{invTotal}}</strong></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="modal-dialog modal-fullscreen-sm-down" id="test">...</div>
+        <div class="">
+          <button
+            type="button"
+            ng-disabled="!invTotal"
+            class="btn btn-primary"
+            ng-click="clearInvoice()"
+          >
+            Clear invoice
+          </button>
+
+          <button
+            ng-disabled="!invTotal"
+            class="btn btn-success"
+            ng-click="goToCheckout()"
+          >
+            Checkout
+          </button>
+        </div>
       </div>
     </div>
 
@@ -191,9 +205,9 @@
       <h4 class="mb-3 mt-3">
         <i class="fa-solid fa-table me-2"></i>All Products
       </h4>
-      <div ng-if="!isLoading" class="table-responsive">
+      <div ng-if="!isLoading" class="table-responsive rounded shadow-sm">
         <table class="table table-bordered table-sm table-striped text-center">
-          <thead>
+          <thead class="table-dark">
             <tr>
               <th>Name</th>
               <th>Qty</th>
@@ -343,12 +357,13 @@
                         class="form-control form-control-sm"
                         ng-model="product.selectedQuantity"
                         min="1"
+                        max="{{product.producQuantity}}"
                         placeholder="Qty"
                         style="max-width: 60px"
                       />
                       <button
                         class="btn btn-sm"
-                        ng-click="addToInvoice(product, product.selectedQuantity)"
+                        ng-click="addToInvoice(product, product.selectedQuantity || 1)"
                       >
                         <i class="fa-solid fa-plus"></i>
                         <span class="d-none d-md-inline">Add to Invoice</span>

@@ -1,1 +1,41 @@
 <h1>Checkout</h1>
+<div class="container" ng-controller="checkoutCtrl">
+  <h3>Invoice Summary</h3>
+
+  <table class="table">
+    <tr ng-repeat="item in invoice">
+      <td>{{item.productName}}</td>
+      <td>{{item.productPrice}}</td>
+      <td>{{item.productQuantity}}</td>
+    </tr>
+  </table>
+
+  <h4>Total: {{invTotal}}</h4>
+
+  <hr />
+
+  <h3>Customer Info</h3>
+
+  <input
+    class="form-control mb-2"
+    placeholder="Customer Name"
+    ng-model="customerName"
+  />
+  <input
+    class="form-control mb-2"
+    placeholder="Customer Phone"
+    ng-model="customerPhone"
+  />
+
+  <button class="btn btn-success" ng-click="checkout()">
+    Confirm Checkout
+  </button>
+
+  <button
+    class="btn btn-primary"
+    ng-if="invoiceCompleted"
+    ng-click="printInvoice()"
+  >
+    Print Invoice
+  </button>
+</div>
