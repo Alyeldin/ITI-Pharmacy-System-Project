@@ -13,6 +13,81 @@ app.controller(
       $scope.currUser = JSON.parse(localStorage.getItem("currUser"));
     }
 
+    $scope.isLocked = localStorage.getItem("isLocked") === "true";
+    $scope.unlockError = false;
+
+    $scope.lockSystem = function () {
+      $scope.isLocked = true;
+      localStorage.setItem("isLocked", "true");
+    };
+
+    $scope.unlockSystem = function () {
+      var enteredPin = $scope.credentials.unlockPin;
+      if (enteredPin && parseInt(enteredPin) === $scope.currUser.pin) {
+        $scope.isLocked = false;
+        $scope.unlockError = false;
+        localStorage.removeItem("isLocked");
+        $scope.credentials.unlockPin = "";
+      } else {
+        $scope.unlockError = true;
+      }
+    };
+
+    $scope.pinData = { currentPin: "", newPin: "", confirmPin: "" };
+    $scope.pinChangeError = false;
+    $scope.pinChangeSuccess = false;
+    $scope.pinErrorMsg = "";
+
+    $scope.changePin = function () {
+      $scope.pinChangeError = false;
+      $scope.pinChangeSuccess = false;
+
+      if (parseInt($scope.pinData.currentPin) !== $scope.currUser.pin) {
+        $scope.pinChangeError = true;
+        $scope.pinErrorMsg = "Current PIN is incorrect.";
+        return;
+      }
+
+      if ($scope.pinData.newPin !== $scope.pinData.confirmPin) {
+        $scope.pinChangeError = true;
+        $scope.pinErrorMsg = "New PIN and Confirm PIN do not match.";
+        return;
+      }
+
+      if (isNaN($scope.pinData.newPin) || $scope.pinData.newPin.trim() === "") {
+        $scope.pinChangeError = true;
+        $scope.pinErrorMsg = "New PIN must be a number.";
+        return;
+      }
+
+      $scope.isChangingPin = true;
+      var newPinInt = parseInt($scope.pinData.newPin);
+
+      UserService.updateUser($scope.currUser.usersID, { pin: newPinInt })
+        .then(function (res) {
+          $scope.pinChangeSuccess = true;
+          $scope.currUser.pin = newPinInt;
+          localStorage.setItem("currUser", JSON.stringify($scope.currUser));
+
+          $scope.pinData = { currentPin: "", newPin: "", confirmPin: "" };
+
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Your PIN has been updated successfully",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+        })
+        .catch(function (err) {
+          $scope.pinChangeError = true;
+          $scope.pinErrorMsg = "Failed to update PIN. Please try again.";
+        })
+        .finally(function () {
+          $scope.isChangingPin = false;
+        });
+    };
+
     UserService.getUsers()
       .then(function (response) {
         $scope.users = response.data;
@@ -107,6 +182,8 @@ app.controller(
       localStorage.removeItem("isLoggedIn");
       localStorage.removeItem("currUser");
       localStorage.removeItem("username");
+      localStorage.removeItem("isLocked");
+      $scope.isLocked = false;
     };
 
     $scope.isActive = function (viewLocation) {
