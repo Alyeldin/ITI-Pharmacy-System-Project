@@ -1,1 +1,81 @@
-<h1>Show Invoices</h1>
+<div class="container-fluid p-4 bg-light min-vh-100">
+    <div class="row pt-4">
+        <div class="col-12 pr-4 pl-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold text-dark m-0">
+                    <i class="fa-solid fa-file-invoice text-primary me-2"></i>Invoices List
+                </h2>
+                <button class="btn btn-outline-primary shadow-sm" ng-click="loadInvoices()" ng-disabled="isLoading">
+                    <i class="fa-solid fa-arrows-rotate me-2" ng-class="{'fa-spin': isLoading}"></i> Refresh
+                </button>
+            </div>
+
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-0">
+
+                    <div class="loader-container p-5 text-center" ng-if="isLoading">
+                        <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+                        </div>
+                        <p class="text-muted fs-5 fw-medium">Loading invoices...</p>
+                    </div>
+
+                    <div class="p-5 text-center text-muted" ng-if="!isLoading && invoices.length === 0">
+                        <i class="fa-solid fa-file-invoice fa-4x mb-3 text-secondary opacity-50"></i>
+                        <h4>No Invoices Found</h4>
+                        <p>You haven't generated any invoices yet.</p>
+                    </div>
+
+                    <div class="table-responsive" ng-if="!isLoading && invoices.length > 0">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="py-3 px-4 text-secondary text-uppercase"
+                                        style="font-size: 0.85rem; font-weight: 600;">ID / Ref</th>
+                                    <th class="py-3 px-4 text-secondary text-uppercase"
+                                        style="font-size: 0.85rem; font-weight: 600;">Customer</th>
+                                    <th class="py-3 px-4 text-secondary text-uppercase text-end"
+                                        style="font-size: 0.85rem; font-weight: 600;">Items Count</th>
+                                    <th class="py-3 px-4 text-secondary text-uppercase text-end"
+                                        style="font-size: 0.85rem; font-weight: 600;">Total Amount</th>
+                                    <th class="py-3 px-4 text-secondary text-uppercase"
+                                        style="font-size: 0.85rem; font-weight: 600;">Cashier</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="invoice in invoices | orderBy:'-invoiceID'" class="border-bottom">
+                                    <td class="px-4 py-3">
+                                        <span
+                                            class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-1 fs-6">
+                                            #{{ invoice.invoiceID || 'INV-' + $index }}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 fw-medium text-dark">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center text-primary fw-bold me-3"
+                                                style="width: 40px; height: 40px;">
+                                                {{ (invoice.customerName || '?')[0].toUpperCase() }}
+                                            </div>
+                                            {{ invoice.customerName || 'N/A' }}
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-end fw-medium text-secondary">
+                                        {{ (invoice.invoiceItems.length || 0) }} items
+                                    </td>
+                                    <td class="px-4 py-3 text-end fw-bold text-success fs-5">
+                                        {{ invoice.invoiceTotalPrice | currency:'EGP':2 }}
+                                    </td>
+                                    <td class="px-4 py-3 text-muted">
+                                        <i class="fa-solid fa-user-tag me-2 opacity-50"></i>{{ invoice.userName ||
+                                        'System' }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

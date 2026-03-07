@@ -28,7 +28,7 @@ app.config(function ($routeProvider) {
     })
     .when("/showInvoices", {
       templateUrl: "views/showInvoices.html",
-      controller: "",
+      controller: "showInvoicesCtrl",
     })
     .when("/showProducts", {
       templateUrl: "views/showProducts.html",

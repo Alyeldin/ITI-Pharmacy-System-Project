@@ -26,10 +26,10 @@ app.service("checkoutService", function ($http) {
   };
 
   this.createInvoice = function (invoiceData) {
-    return $http.patch(API_INVOICES, invoiceData, config);
+    return $http.post(API_INVOICES, invoiceData, config);
   };
   // Create new customer (NEW - fix the endpoint)
   this.createCustomer = function (customer) {
-    return $http.patch(API_CUSTOMERS, customer, config);
+    return $http.post(API_CUSTOMERS, customer, config);
   };
 });

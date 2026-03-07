@@ -1,8 +1,11 @@
 app.controller("checkoutCtrl", function ($scope, checkoutService) {
-  $scope.invoice = localStorage.getItem("invoice") || [];
-  alert($scope.invoice);
+  try {
+    $scope.invoice = JSON.parse(localStorage.getItem("invoice")) || [];
+  } catch (e) {
+    $scope.invoice = [];
+  }
+
   $scope.invTotal = parseFloat(localStorage.getItem("invTotal")) || 0;
-  alert($scope.invTotal);
 
   $scope.customerName = "";
   $scope.customerPhone = "";
@@ -15,20 +18,22 @@ app.controller("checkoutCtrl", function ($scope, checkoutService) {
       return;
     }
 
+    var currUser = JSON.parse(localStorage.getItem("currUser")) || {};
+
     $scope.invoiceData = {
-      items: $scope.invoice,
-      total: $scope.invTotal,
+      invoiceItems: $scope.invoice,
+      invoiceTotalPrice: $scope.invTotal,
       customerName: $scope.customerName,
-      customerPhone: $scope.customerPhone,
+      userName: currUser.userName || currUser.name,
     };
-    alert($scope.invoiceData);
+
     checkoutService
-      .createInvoice(invoiceData)
+      .createInvoice($scope.invoiceData)
 
       .then(function () {
         return checkoutService.createCustomer({
-          name: $scope.customerName,
-          phone: $scope.customerPhone,
+          customerName: $scope.customerName,
+          customerPhone: $scope.customerPhone,
         });
       })
 
@@ -43,8 +48,9 @@ app.controller("checkoutCtrl", function ($scope, checkoutService) {
 
       .catch(function (err) {
         console.error("Checkout error:", err);
-
-        Swal.fire("Error", "Failed to checkout.", "error");
+        var errMsg =
+          err.data && err.data.message ? err.data.message : "Unknown error";
+        Swal.fire("Error", "Failed to checkout: " + errMsg, "error");
       });
   };
 
