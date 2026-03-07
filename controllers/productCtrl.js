@@ -14,6 +14,19 @@ app.controller("productCtrl", function ($scope, productService, $timeout) {
 
   $scope.invTotal = JSON.parse(localStorage.getItem("invTotal") || 0);
 
+  $scope.search = "";
+  $scope.selectedCategory = "";
+  $scope.selectedType = "";
+  $scope.selectedMaterial = "";
+  $scope.sortKey = "productName"; // default sort
+
+  $scope.clearAllFilters = function () {
+    $scope.search = "";
+    $scope.selectedCategory = "";
+    $scope.selectedType = "";
+    $scope.selectedMaterial = "";
+  };
+
   // Fetch Data
   $scope.load = function () {
     $scope.isLoading = true;

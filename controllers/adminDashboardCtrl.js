@@ -7,10 +7,6 @@ app.controller(
       lowStockCount: 0,
     };
 
-    $scope.refreshDashboard = function () {
-      loadDashboard();
-    };
-
     function loadDashboard() {
       // 1. Total customers (from Customers table)
       checkoutService
