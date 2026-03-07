@@ -8,7 +8,7 @@ app.config(function ($routeProvider) {
     })
     .when("/checkout", {
       templateUrl: "views/checkout.html",
-      controller: "",
+      controller: "checkoutCtrl",
     })
     .when("/profilePage", {
       templateUrl: "views/profilePage.html",
