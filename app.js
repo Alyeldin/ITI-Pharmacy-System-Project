@@ -4,7 +4,7 @@ app.config(function ($routeProvider) {
   $routeProvider
     .when("/adminDashboard", {
       templateUrl: "views/adminDashboard.html",
-      controller: "",
+      controller: "adminDashboardCtrl",
     })
     .when("/checkout", {
       templateUrl: "views/checkout.html",
