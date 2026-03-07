@@ -4,20 +4,26 @@ app.controller("showUsersCtrl", function ($scope, UserService) {
   $scope.currUser = JSON.parse(localStorage.getItem("currUser"));
   console.log($scope.currUser.role);
 
-  UserService.getUsers()
-    .then(function (response) {
-      $scope.users = response.data;
-      console.log($scope.users);
-    })
-    .finally(function () {
-      $scope.isLoading = false;
-    });
+  $scope.load = function () {
+    $scope.isLoading = true;
+    UserService.getUsers()
+      .then(function (response) {
+        $scope.users = response.data;
+        console.log($scope.users);
+      })
+      .finally(function () {
+        $scope.isLoading = false;
+      });
+  };
+
+  // Initial load
+  $scope.load();
 
   $scope.addUser = function () {
     $scope.isPosting = true;
     UserService.createUser($scope.newUser)
       .then(function (res) {
-        $scope.users.push(res.data[0] || res.data); // Supabase usually returns an array
+        $scope.load(); // Refresh the list from DB
         $scope.newUser = {}; // Reset form
         Swal.fire({
           icon: "success",
@@ -75,7 +81,7 @@ app.controller("showUsersCtrl", function ($scope, UserService) {
           text: "User info saved successfully.",
           timer: 1500,
           showConfirmButton: false,
-        }).then(() => window.location.reload());
+        }).then(() => $scope.load());
       })
       .catch(function (err) {
         console.error("Error updating user: ", err);
@@ -97,7 +103,7 @@ app.controller("showUsersCtrl", function ($scope, UserService) {
       if (result.isConfirmed) {
         UserService.deleteUser(id)
           .then(function () {
-            $scope.users.splice(index, 1);
+            $scope.load();
             Swal.fire("Deleted!", "User has been removed.", "success");
           })
           .catch(function (err) {
