@@ -1,6 +1,6 @@
 app.controller(
   "checkoutCtrl",
-  function ($scope, checkoutService, productService, $q) {
+  function ($scope, checkoutService, productService, $q, $timeout) {
     try {
       $scope.invoice = JSON.parse(localStorage.getItem("invoice")) || [];
     } catch (e) {
@@ -67,11 +67,21 @@ app.controller(
           localStorage.removeItem("invoice");
           localStorage.removeItem("invTotal");
 
-          Swal.fire(
-            "Success",
-            "Checkout completed and inventory updated!",
-            "success",
-          );
+          Swal.fire({
+            title: "Success",
+            text: "Checkout completed and inventory updated!",
+            icon: "success",
+            showDenyButton: true,
+            confirmButtonText: "OK",
+            denyButtonText: "Print Invoice",
+          }).then((result) => {
+            if (result.isDenied) {
+              $scope.printInvoice();
+            }
+            $timeout(function () {
+              window.location.href = "#!/showProducts";
+            }, 100);
+          });
         })
         .catch(function (err) {
           console.error("Checkout error:", err);
