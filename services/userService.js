@@ -18,7 +18,7 @@ app.service("UserService", function ($http) {
   };
 
   this.updateUser = function (id, user) {
-    return $http.put(API_URL + "?usersID=eq." + id, user, config);
+    return $http.patch(API_URL + "?usersID=eq." + id, user, config);
   };
 
   this.createUser = function (user) {
