@@ -243,7 +243,7 @@
                   type="number"
                   class="form-control form-control-sm"
                   ng-if="product.isEditing"
-                  ng-model="product.producQuantity"
+                  ng-model="product.productQuantity"
                 />
               </td>
 
@@ -357,7 +357,7 @@
                         class="form-control form-control-sm"
                         ng-model="product.selectedQuantity"
                         min="1"
-                        max="{{product.producQuantity}}"
+                        max="{{product.productQuantity}}"
                         placeholder="Qty"
                         style="max-width: 60px"
                       />
