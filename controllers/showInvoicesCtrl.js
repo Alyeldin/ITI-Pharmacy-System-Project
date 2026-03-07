@@ -8,6 +8,16 @@ app.controller("showInvoicesCtrl", function ($scope, checkoutService) {
       .getInvoices()
       .then(function (res) {
         $scope.invoices = res.data;
+        $scope.uniqueCustomers = [
+          ...new Set($scope.invoices.map((i) => i.customerName)),
+        ]
+          .filter(Boolean)
+          .sort();
+        $scope.uniqueUsers = [
+          ...new Set($scope.invoices.map((i) => i.userName)),
+        ]
+          .filter(Boolean)
+          .sort();
         console.log("Invoices loaded:", $scope.invoices);
       })
       .catch(function (err) {
@@ -21,6 +31,12 @@ app.controller("showInvoicesCtrl", function ($scope, checkoutService) {
       .finally(function () {
         $scope.isLoading = false;
       });
+  };
+
+  $scope.searchFilter = {
+    customerName: "",
+    userName: "",
+    $: "", // General search
   };
 
   // Initialize

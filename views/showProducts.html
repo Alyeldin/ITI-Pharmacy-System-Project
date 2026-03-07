@@ -9,55 +9,31 @@
           <div class="form-row">
             <div class="form-group-compact">
               <label>Product Name</label>
-              <input
-                type="text"
-                class="form-control form-control-compact"
-                ng-model="newProduct.productName"
-                placeholder="e.g., Aspirin"
-                required
-              />
+              <input type="text" class="form-control form-control-compact" ng-model="newProduct.productName"
+                placeholder="e.g., Aspirin" required />
             </div>
             <div class="form-group-compact">
               <label>Quantity</label>
-              <input
-                type="number"
-                class="form-control form-control-compact"
-                ng-model="newProduct.productQuantity"
-                placeholder="0"
-                required
-              />
+              <input type="number" class="form-control form-control-compact" ng-model="newProduct.productQuantity"
+                placeholder="0" required />
             </div>
             <div class="form-group-compact">
               <label>Product Price</label>
-              <input
-                type="number"
-                class="form-control form-control-compact"
-                ng-model="newProduct.productPrice"
-                placeholder="0.00"
-                required
-              />
+              <input type="number" class="form-control form-control-compact" ng-model="newProduct.productPrice"
+                placeholder="0.00" required />
             </div>
 
             <div class="form-group-compact">
               <label>Category</label>
-              <input
-                type="text"
-                class="form-control form-control-compact"
-                ng-model="newProduct.productCategory"
-                placeholder="e.g., Pain Relief"
-                required
-              />
+              <input type="text" class="form-control form-control-compact" ng-model="newProduct.productCategory"
+                placeholder="e.g., Pain Relief" required />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group-compact">
               <label>Product Type</label>
-              <select
-                class="form-control form-control-compact"
-                ng-model="newProduct.productType"
-                required
-              >
+              <select class="form-control form-control-compact" ng-model="newProduct.productType" required>
                 <option value="">-- Select --</option>
                 <option value="Tablet">Tablet</option>
                 <option value="Capsule">Capsule</option>
@@ -68,22 +44,12 @@
             </div>
             <div class="form-group-compact">
               <label>Effective Material</label>
-              <input
-                type="text"
-                class="form-control form-control-compact"
-                ng-model="newProduct.effectiveMaterial"
-                placeholder="e.g., Ibuprofen"
-                required
-              />
+              <input type="text" class="form-control form-control-compact" ng-model="newProduct.effectiveMaterial"
+                placeholder="e.g., Ibuprofen" required />
             </div>
             <div class="form-group-compact">
               <label>Expiry Date</label>
-              <input
-                type="date"
-                class="form-control form-control-compact"
-                ng-model="newProduct.expiryDate"
-                required
-              />
+              <input type="date" class="form-control form-control-compact" ng-model="newProduct.expiryDate" required />
             </div>
             <button type="submit" class="btn btn-add" ng-disabled="isPosting">
               <i class="fa-solid fa-plus me-1"></i>
@@ -94,19 +60,14 @@
       </div>
       <!-- create invoivce form -->
 
-      <div
-        class="col-5 p-2 m-1 shadow rounded-4 d-flex flex-column justify-content-between"
-      >
+      <div class="col-5 p-2 m-1 shadow rounded-4 d-flex flex-column justify-content-between">
         <div class="justify-content-start">
           <h4><i class="fa-solid fa-plus-circle me-2"></i> Invoice</h4>
           <div ng-show="!invTotal" class="p-5 mt-2 text-secondary fst-italic">
             Start adding item from Medidicines table...
           </div>
 
-          <table
-            ng-show="invTotal"
-            class="table table-hover table-striped text-center"
-          >
+          <table ng-show="invTotal" class="table table-hover table-striped text-center">
             <thead>
               <tr>
                 <th>Action</th>
@@ -118,11 +79,7 @@
             <tbody>
               <tr ng-repeat="invoiceItem in invoice">
                 <td>
-                  <button
-                    type="button"
-                    ng-click="removeItem($index)  "
-                    class="btn btn-danger"
-                  >
+                  <button type="button" ng-click="removeItem($index)  " class="btn btn-danger">
                     Remove
                   </button>
                 </td>
@@ -140,20 +97,11 @@
           </table>
         </div>
         <div class="">
-          <button
-            type="button"
-            ng-disabled="!invTotal"
-            class="btn btn-primary"
-            ng-click="clearInvoice()"
-          >
+          <button type="button" ng-disabled="!invTotal" class="btn btn-primary" ng-click="clearInvoice()">
             Clear invoice
           </button>
 
-          <button
-            ng-disabled="!invTotal"
-            class="btn btn-success"
-            ng-click="goToCheckout()"
-          >
+          <button ng-disabled="!invTotal" class="btn btn-success" ng-click="goToCheckout()">
             Checkout
           </button>
         </div>
@@ -166,30 +114,15 @@
       <div class="search-section">
         <h4><i class="fa-solid fa-search me-2"></i>Search Products</h4>
         <div class="input-group mb-3">
-          <input
-            ng-model="search"
-            type="text"
-            class="form-control"
-            placeholder="Search Medicines..."
-          />
-          <button
-            ng-click="filterStudents()"
-            class="btn btn-outline-secondary"
-            type="button"
-            id="button-addon2"
-          >
+          <input ng-model="search" type="text" class="form-control" placeholder="Search Medicines..." />
+          <button ng-click="filterStudents()" class="btn btn-outline-secondary" type="button" id="button-addon2">
             Search
           </button>
         </div>
 
         <div class="form-group">
           <h4><i class="fa-solid fa-filter me-2"></i>Filter Products</h4>
-          <select
-            id="sortSelect"
-            name="sortSelect"
-            ng-model="sortKey"
-            class="form-control"
-          >
+          <select id="sortSelect" name="sortSelect" ng-model="sortKey" class="form-control">
             <option value="name">Name</option>
             <option value="-mark">Mark (High to low)</option>
             <option value="mark">Mark (Low to high)</option>
@@ -223,66 +156,36 @@
             <tr ng-repeat="product in products">
               <!-- Product Name -->
               <td>
-                <span ng-if="!product.isEditing"
-                  >{{ product.productName }}</span
-                >
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  ng-if="product.isEditing"
-                  ng-model="product.productName"
-                />
+                <span ng-if="!product.isEditing">{{ product.productName }}</span>
+                <input type="text" class="form-control form-control-sm" ng-if="product.isEditing"
+                  ng-model="product.productName" />
               </td>
 
               <!-- Quantity -->
               <td>
-                <span ng-if="!product.isEditing"
-                  >{{ product.productQuantity }}</span
-                >
-                <input
-                  type="number"
-                  class="form-control form-control-sm"
-                  ng-if="product.isEditing"
-                  ng-model="product.productQuantity"
-                />
+                <span ng-if="!product.isEditing">{{ product.productQuantity }}</span>
+                <input type="number" class="form-control form-control-sm" ng-if="product.isEditing"
+                  ng-model="product.productQuantity" />
               </td>
 
               <!-- Product Price -->
               <td>
-                <span ng-if="!product.isEditing"
-                  >{{ product.productPrice | currency:'EGP':2 }}</span
-                >
-                <input
-                  type="number"
-                  class="form-control form-control-sm"
-                  ng-if="product.isEditing"
-                  ng-model="product.productPrice"
-                />
+                <span ng-if="!product.isEditing">{{ product.productPrice | currency:'EGP':2 }}</span>
+                <input type="number" class="form-control form-control-sm" ng-if="product.isEditing"
+                  ng-model="product.productPrice" />
               </td>
 
               <!-- Category -->
               <td>
-                <span ng-if="!product.isEditing"
-                  >{{ product.productCategory }}</span
-                >
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  ng-if="product.isEditing"
-                  ng-model="product.productCategory"
-                />
+                <span ng-if="!product.isEditing">{{ product.productCategory }}</span>
+                <input type="text" class="form-control form-control-sm" ng-if="product.isEditing"
+                  ng-model="product.productCategory" />
               </td>
 
               <!-- Type -->
               <td>
-                <span ng-if="!product.isEditing"
-                  >{{ product.productType }}</span
-                >
-                <select
-                  ng-if="product.isEditing"
-                  ng-model="product.productType"
-                  class="form-select form-select-sm"
-                >
+                <span ng-if="!product.isEditing">{{ product.productType }}</span>
+                <select ng-if="product.isEditing" ng-model="product.productType" class="form-select form-select-sm">
                   <option value="Tablet">Tablet</option>
                   <option value="Capsule">Capsule</option>
                   <option value="Syrup">Syrup</option>
@@ -293,22 +196,14 @@
 
               <!-- Material -->
               <td>
-                <span ng-if="!product.isEditing"
-                  >{{ product.effectiveMaterial }}</span
-                >
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  ng-if="product.isEditing"
-                  ng-model="product.effectiveMaterial"
-                />
+                <span ng-if="!product.isEditing">{{ product.effectiveMaterial }}</span>
+                <input type="text" class="form-control form-control-sm" ng-if="product.isEditing"
+                  ng-model="product.effectiveMaterial" />
               </td>
 
               <!-- Expiry Date -->
               <td>
-                <span ng-if="!product.isEditing"
-                  >{{ product.expiryDate | date:'MM/dd/yyyy' }}</span
-                >
+                <span ng-if="!product.isEditing">{{ product.expiryDate | date:'MM/dd/yyyy' }}</span>
                 <!-- <input
                   type="date"
                   class="form-control form-control-sm"
@@ -322,49 +217,28 @@
                 <div class="action-buttons">
                   <div ng-if="currUser.role =='admin'">
                     <div ng-if="!product.isEditing">
-                      <button
-                        class="btn btn-table btn-edit"
-                        ng-click="editProduct(product)"
-                      >
+                      <button class="btn btn-table btn-edit" ng-click="editProduct(product)">
                         <i class="fa-solid fa-pen-to-square"></i>Edit
                       </button>
-                      <button
-                        class="btn btn-table btn-delete"
-                        ng-click="removeProduct(product.productID, $index)"
-                      >
+                      <button class="btn btn-table btn-delete" ng-click="removeProduct(product.productID, $index)">
                         <i class="fa-solid fa-trash"></i>Delete
                       </button>
                     </div>
                     <div ng-if="product.isEditing">
-                      <button
-                        class="btn btn-table btn-save"
-                        ng-click="saveUpdate(product)"
-                      >
+                      <button class="btn btn-table btn-save" ng-click="saveUpdate(product)">
                         <i class="fa-solid fa-check"></i>Save
                       </button>
-                      <button
-                        class="btn btn-table btn-cancel"
-                        ng-click="cancelEdit(product)"
-                      >
+                      <button class="btn btn-table btn-cancel" ng-click="cancelEdit(product)">
                         <i class="fa-solid fa-x"></i>Cancel
                       </button>
                     </div>
                   </div>
                   <div ng-if="currUser.role==='user'">
                     <div class="d-flex align-content-sm-between p-2">
-                      <input
-                        type="number"
-                        class="form-control form-control-sm"
-                        ng-model="product.selectedQuantity"
-                        min="1"
-                        max="{{product.productQuantity}}"
-                        placeholder="Qty"
-                        style="max-width: 60px"
-                      />
-                      <button
-                        class="btn btn-sm"
-                        ng-click="addToInvoice(product, product.selectedQuantity || 1)"
-                      >
+                      <input type="number" class="form-control form-control-sm" ng-model="product.selectedQuantity"
+                        ng-model-options="{ allowInvalid: true }" min="1" max="{{product.productQuantity}}"
+                        placeholder="Qty" style="max-width: 60px" />
+                      <button class="btn btn-sm" ng-click="addToInvoice(product, product.selectedQuantity)">
                         <i class="fa-solid fa-plus"></i>
                         <span class="d-none d-md-inline">Add to Invoice</span>
                       </button>

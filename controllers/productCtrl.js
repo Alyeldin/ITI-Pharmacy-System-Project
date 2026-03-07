@@ -98,17 +98,33 @@ app.controller("productCtrl", function ($scope, productService, $timeout) {
   };
 
   $scope.addToInvoice = function (product, quantity) {
-    if (quantity > product.productQuantity || quantity < 1) {
-      Swal.fire("Error", "Invalid quantity.", "error");
+    // If quantity is not provided, default to 1
+    if (quantity === undefined || quantity === null || quantity === "") {
+      quantity = 1;
+    }
+
+    if (quantity > product.productQuantity) {
+      Swal.fire({
+        icon: "error",
+        title: "Insufficient Quantity",
+        text: "There is no enough quantity of this product",
+      });
+      return;
+    }
+
+    if (quantity < 1) {
+      Swal.fire("Error", "Please enter a valid quantity (minimum 1).", "error");
       return;
     }
 
     $scope.item = {
+      productID: product.productID,
       productName: product.productName,
       productPrice: product.productPrice,
-      productQuantity: quantity,
+      productQuantity: quantity, // Quantity being purchased
+      currentStock: product.productQuantity, // Current stock to calculate new stock
     };
-    console.log("this is item " + $scope.item);
+    console.log("this is item ", $scope.item);
 
     $scope.invoice.push($scope.item);
 

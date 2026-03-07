@@ -19,7 +19,7 @@ app.service("productService", function ($http) {
     return $http.post(API_URL, product, config);
   };
   this.updateProduct = function (id, product) {
-    return $http.put(API_URL + "?productID=eq." + id, product, config);
+    return $http.patch(API_URL + "?productID=eq." + id, product, config);
   };
   this.deleteProduct = function (id) {
     return $http.delete(API_URL + "?productID=eq." + id, config);

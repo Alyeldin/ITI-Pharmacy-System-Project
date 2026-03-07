@@ -14,10 +14,6 @@ app.config(function ($routeProvider) {
       templateUrl: "views/profilePage.html",
       controller: "",
     })
-    .when("/returnProduct", {
-      templateUrl: "views/returnProduct.html",
-      controller: "",
-    })
     .when("/showCustomers", {
       templateUrl: "views/showCustomers.html",
       controller: "showCustomersCtrl",
