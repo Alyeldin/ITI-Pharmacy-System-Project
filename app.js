@@ -18,13 +18,9 @@ app.config(function ($routeProvider) {
       templateUrl: "views/returnProduct.html",
       controller: "",
     })
-    .when("/salesHistory", {
-      templateUrl: "views/salesHistory.html",
-      controller: "",
-    })
     .when("/showCustomers", {
       templateUrl: "views/showCustomers.html",
-      controller: "",
+      controller: "showCustomersCtrl",
     })
     .when("/showInvoices", {
       templateUrl: "views/showInvoices.html",
@@ -36,7 +32,7 @@ app.config(function ($routeProvider) {
     })
     .when("/showShifts", {
       templateUrl: "views/showShifts.html",
-      controller: "",
+      controller: "showShiftsCtrl",
     })
     .when("/showUsers", {
       templateUrl: "views/showUsers.html",
