@@ -50,6 +50,7 @@ app.controller("showUsersCtrl", function ($scope, UserService) {
       user.name = user.originalData.name;
       user.userName = user.originalData.userName;
       user.password = user.originalData.password;
+      user.pin = user.originalData.pin;
     }
   };
 
@@ -59,6 +60,7 @@ app.controller("showUsersCtrl", function ($scope, UserService) {
       name: user.name,
       userName: user.userName,
       password: user.password,
+      pin: user.pin,
       // Add other database columns here if you have them,
       // but DO NOT include usersID, isEditing, or originalData
     };

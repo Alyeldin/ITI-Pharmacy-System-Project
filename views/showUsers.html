@@ -17,10 +17,15 @@
               <input type="text" class="form-control form-control-compact" ng-model="newUser.userName"
                 placeholder="ex: jdoe123" required />
             </div>
-            <div class="form-group-compact col-md-4 mb-2">
+            <div class="form-group-compact col-md-3 mb-2">
               <label>Password</label>
               <input type="password" class="form-control form-control-compact" ng-model="newUser.password"
                 placeholder="••••••••" required />
+            </div>
+            <div class="form-group-compact col-md-3 mb-2">
+              <label>PIN</label>
+              <input type="text" class="form-control form-control-compact" ng-model="newUser.pin" placeholder="ex: 1234"
+                required maxlength="4" />
             </div>
           </div>
 
@@ -80,6 +85,7 @@
               <th>Username</th>
               <th>Role</th>
               <th>Password</th>
+              <th>PIN</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -119,6 +125,13 @@
                   ng-model="user.password" placeholder="New Password" />
               </td>
 
+              <!-- PIN -->
+              <td>
+                <span ng-if="!user.isEditing" class="text-muted">••••</span>
+                <input type="text" class="form-control form-control-sm text-center" ng-if="user.isEditing"
+                  ng-model="user.pin" placeholder="PIN" maxlength="4" />
+              </td>
+
               <!-- Actions -->
               <td>
                 <div class="action-buttons justify-content-center">
@@ -145,7 +158,7 @@
               </td>
             </tr>
             <tr ng-if="users.length === 0">
-              <td colspan="5" class="text-center py-4 text-muted">No users found.</td>
+              <td colspan="6" class="text-center py-4 text-muted">No users found.</td>
             </tr>
           </tbody>
         </table>
