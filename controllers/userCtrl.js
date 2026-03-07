@@ -7,7 +7,7 @@ app.controller(
     $scope.users = [];
     $scope.currUser = {};
 
-    // ✅ CHECK IF USER WAS ALREADY LOGGED IN (on page refresh)
+    // CHECK IF USER WAS ALREADY LOGGED IN (on page refresh)
     if (localStorage.getItem("isLoggedIn") === "true") {
       $scope.isLoggedIn = true;
       $scope.currUser = JSON.parse(localStorage.getItem("currUser"));

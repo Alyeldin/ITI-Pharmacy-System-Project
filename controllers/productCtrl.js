@@ -36,7 +36,7 @@ app.controller("productCtrl", function ($scope, productService, $timeout) {
     productService
       .createProduct($scope.newProduct)
       .then(function (res) {
-        $scope.products.push(res.data);
+        $scope.load();
 
         $scope.newProduct = {};
         Swal.fire({
@@ -45,7 +45,7 @@ app.controller("productCtrl", function ($scope, productService, $timeout) {
           text: "Product added successfully",
           timer: 2000,
           showConfirmButton: false,
-        }).then($window.location.reload());
+        });
       })
       .finally(function () {
         $scope.isPosting = false;
