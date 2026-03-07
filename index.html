@@ -113,11 +113,13 @@
           <a href="#!/returnProduct" class="nav-link" ng-class="{active: isActive('/returnProduct')}"><i
               class="fa-solid fa-rotate-left me-2"></i> Return Product</a>
         </li>
+        
         <li ng-show=" currUser.role ==='admin'">
           <a href="#!/salesHistory" class="nav-link" ng-class="{active: isActive('/salesHistory')}"><i
               class="fa-solid fa-clock-rotate-left me-2"></i> Sales
             History</a>
         </li>
+
         <li>
           <a href="#!/showCustomers" class="nav-link" ng-class="{active: isActive('/showCustomers')}"><i
               class="fa-solid fa-users me-2"></i> Customers</a>
@@ -127,6 +129,7 @@
           <a href="#!/showShifts" class="nav-link" ng-class="{active: isActive('/showShifts')}"><i
               class="fa-solid fa-user-clock me-2"></i> Shifts</a>
         </li>
+
         <li ng-show=" currUser.role ==='admin'">
           <a href="#!/showUsers" class="nav-link" ng-class="{active: isActive('/showUsers')}"><i
               class="fa-solid fa-user me-2"></i> Users</a>

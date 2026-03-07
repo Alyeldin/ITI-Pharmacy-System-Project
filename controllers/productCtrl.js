@@ -1,4 +1,4 @@
-app.controller("productCtrl", function ($scope, productService) {
+app.controller("productCtrl", function ($scope, productService, $timeout) {
   $scope.products = [];
 
   // used to add product
@@ -8,6 +8,11 @@ app.controller("productCtrl", function ($scope, productService) {
 
   $scope.currUser = JSON.parse(localStorage.getItem("currUser"));
   console.log($scope.currUser.role);
+
+  $scope.invoice = JSON.parse(localStorage.getItem("invoice")) || [];
+  console.log("this is scope.invoice " + $scope.invoice);
+
+  $scope.invTotal = JSON.parse(localStorage.getItem("invTotal") || 0);
 
   // Fetch Data
   $scope.load = function () {
@@ -31,7 +36,8 @@ app.controller("productCtrl", function ($scope, productService) {
     productService
       .createProduct($scope.newProduct)
       .then(function (res) {
-        $scope.products.unshift(res.data);
+        $scope.products.push(res.data);
+
         $scope.newProduct = {};
         Swal.fire({
           icon: "success",
@@ -39,13 +45,10 @@ app.controller("productCtrl", function ($scope, productService) {
           text: "Product added successfully",
           timer: 2000,
           showConfirmButton: false,
-        }).then(function () {
-          window.location.reload();
-        });
+        }).then($window.location.reload());
       })
       .finally(function () {
         $scope.isPosting = false;
-        // window.location.reload();
       });
   };
 
@@ -88,6 +91,77 @@ app.controller("productCtrl", function ($scope, productService) {
   };
   $scope.cancelEdit = function (p) {
     p.isEditing = false;
+  };
+
+  $scope.goToCheckout = function () {
+    window.location.href = "#!/checkout";
+  };
+
+  $scope.addToInvoice = function (product, quantity) {
+    if (quantity > product.productQuantity || quantity < 1) {
+      Swal.fire("Error", "Invalid quantity.", "error");
+      return;
+    }
+
+    $scope.item = {
+      productName: product.productName,
+      productPrice: product.productPrice,
+      productQuantity: quantity,
+    };
+    console.log("this is item " + $scope.item);
+
+    $scope.invoice.push($scope.item);
+
+    localStorage.setItem("invoice", JSON.stringify($scope.invoice));
+
+    $scope.invTotal = ($scope.invTotal || 0) + product.productPrice * quantity;
+
+    localStorage.setItem("invTotal", $scope.invTotal);
+
+    // alert("Product added to invoice successfully!");
+    Swal.fire("Success", "Product added to invoice!", "success"); // alert(localStorage.getItem("invTotal"));
+    // alert(JSON.parse(localStorage.getItem("invoice")));
+    // alert(JSON.parse(localStorage.getItem("invoice")).length);
+    // alert($scope.invTotal);
+    // alert($scope.invoice);
+  };
+
+  $scope.clearInvoice = function () {
+    localStorage.removeItem("invoice");
+    localStorage.removeItem("invTotal");
+    $scope.invoice = [];
+    $scope.invTotal = 0;
+  };
+
+  // $scope.removeItem = function (index, product) {
+  //   $scope.invoice.splice(index, 1);
+  //   $scope.invTotal -= product.productPrice * quantity;
+  //   localStorage.setItem("invoice", JSON.stringify($scope.invoice));
+  //   localStorage.setItem("invTotal", $scope.invTotal);
+  //   alert("Item removed from invoice successfully!");
+  // };
+
+  $scope.removeItem = function (index) {
+    var itemToRemove = $scope.invoice[index];
+
+    var amountToSubtract =
+      itemToRemove.productPrice * itemToRemove.productQuantity;
+
+    $scope.invTotal = ($scope.invTotal || 0) - amountToSubtract;
+    if ($scope.invTotal < 0) $scope.invTotal = 0;
+
+    $scope.invoice.splice(index, 1);
+
+    localStorage.setItem("invoice", JSON.stringify($scope.invoice));
+    localStorage.setItem("invTotal", $scope.invTotal.toFixed(2));
+
+    Swal.fire({
+      icon: "success",
+      title: "Removed",
+      text: `${itemToRemove.productName} removed from invoice`,
+      timer: 1500,
+      showConfirmButton: false,
+    });
   };
 
   $scope.load();

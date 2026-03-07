@@ -19,17 +19,16 @@ app.service("checkoutService", function ($http) {
     return $http.get(API_CUSTOMERS, config);
   };
 
-  this.createInvoice = function (invoice) {
-    return $http.post(API_INVOICES, invoice, config);
-  };
-  this.createCustomers = function (customer) {
-    return $http.post(API_INVOICES, customer, config);
+  // Search customer by phone
+  this.searchCustomerByPhone = function (phone) {
+    return $http.get(`${API_CUSTOMERS}?phone=eq.${phone}`, config);
   };
 
-  this.createInvoice = function (invoice) {
-    return $http.post(API_INVOICES, invoice, config);
+  this.createInvoice = function (invoiceData) {
+    return $http.post(API_INVOICES, invoiceData, config);
   };
-  this.createCustomers = function (customer) {
-    return $http.post(API_INVOICES, customer, config);
+  // Create new customer (NEW - fix the endpoint)
+  this.createCustomer = function (customer) {
+    return $http.post(API_CUSTOMERS, customer, config);
   };
 });
