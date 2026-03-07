@@ -9,6 +9,7 @@ app.service("checkoutService", function ($http) {
       apikey: "sb_publishable_oS6a7X-nhQMU4TsJS4n6Ug_eB4or508",
       Authorization: "Bearer sb_publishable_oS6a7X-nhQMU4TsJS4n6Ug_eB4or508",
       "content-type": "application/json",
+      prefer: "return =representation",
     },
   };
 
@@ -25,10 +26,10 @@ app.service("checkoutService", function ($http) {
   };
 
   this.createInvoice = function (invoiceData) {
-    return $http.post(API_INVOICES, invoiceData, config);
+    return $http.patch(API_INVOICES, invoiceData, config);
   };
   // Create new customer (NEW - fix the endpoint)
   this.createCustomer = function (customer) {
-    return $http.post(API_CUSTOMERS, customer, config);
+    return $http.patch(API_CUSTOMERS, customer, config);
   };
 });
