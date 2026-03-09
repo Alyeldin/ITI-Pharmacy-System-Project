@@ -89,7 +89,7 @@
                     <tbody>
                       <tr ng-repeat="invoiceItem in invoice">
                         <td class="text-truncate" style="max-width: 100px;">{{invoiceItem.productName}}</td>
-                        <td class="text-center">{{invoiceItem.quantity}}</td>
+                        <td class="text-center">{{invoiceItem.productQuantity}}</td>
                         <td class="text-end">EGP {{invoiceItem.productPrice | number:2}}</td>
                       </tr>
                     </tbody>
