@@ -67,8 +67,8 @@ app.controller("productCtrl", function ($scope, productService, $timeout) {
 
   // Update Product
   $scope.saveUpdate = function (product) {
-    productService.updateProduct(product.productID, product).then(function () {
       product.isEditing = false;
+    productService.updateProduct(product.productID, product).then(function () {
       Swal.fire({
         icon: "success",
         title: "Updated!",
