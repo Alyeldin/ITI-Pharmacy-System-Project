@@ -1,90 +1,157 @@
-<div class="container-fluid p-4">
-    <div class="row pt-5">
-        <div class="col-12 col-md-8 col-lg-6 mx-auto">
-            <div class="card shadow border-0 rounded-4">
-                <div class="card-header bg-primary text-white text-center py-4 rounded-top-4">
-                    <h3 class="mb-0"><i class="fa-solid fa-address-card me-2"></i>User Profile</h3>
-                </div>
-                <div class="card-body p-5 text-center">
-                    <div class="mb-4">
-                        <img src="https://ui-avatars.com/api/?name={{currUser.name}}&background=random&size=128"
-                            alt="Profile avatar" class="rounded-circle border border-4 border-white shadow-sm"
-                            style="width: 140px; height: 140px; object-fit: cover; background-color: #f8f9fa;">
-                    </div>
-                    <h2 class="fw-bold mb-2">{{currUser.name}}</h2>
-
-                    <div
-                        class="d-inline-flex align-items-center bg-light rounded-pill px-4 py-2 mt-2 mb-4 shadow-sm border">
-                        <i class="fa-solid fa-user-shield text-primary me-2 fs-5" ng-if="currUser.role === 'admin'"></i>
-                        <i class="fa-solid fa-user text-success me-2 fs-5" ng-if="currUser.role === 'user'"></i>
-                        <span class="fs-5 text-capitalize text-secondary fw-semibold">{{currUser.role}}</span>
-                    </div>
-
-                    <hr class="opacity-25 my-4">
-
-                    <div class="row g-4 text-start justify-content-center">
-                        <div class="col-12 col-md-8">
-                            <div class="p-3 bg-light rounded-3 border text-center">
-                                <small class="text-muted d-block mb-1 text-uppercase fw-bold"
-                                    style="font-size: 0.75rem;"><i
-                                        class="fa-solid fa-id-badge me-2"></i>Username</small>
-                                <span class="fs-6 fw-medium">{{currUser.userName || currUser.name}}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr class="opacity-25 my-4">
-
-                    <div class="row mt-4 text-start justify-content-center">
-                        <div class="col-12">
-                            <div class="card bg-light border-0 shadow-sm rounded-4">
-                                <div class="card-body p-4">
-                                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-key me-2 text-primary"></i> Change
-                                        PIN</h5>
-                                    <form ng-submit="changePin()">
-                                        <div class="mb-3">
-                                            <label class="form-label text-muted small fw-bold text-uppercase">Current
-                                                PIN</label>
-                                            <input type="password" class="form-control" ng-model="pinData.currentPin"
-                                                required>
-                                        </div>
-                                        <div class="row g-3">
-                                            <div class="col-sm-6">
-                                                <label class="form-label text-muted small fw-bold text-uppercase">New
-                                                    PIN</label>
-                                                <input type="password" class="form-control" ng-model="pinData.newPin"
-                                                    required>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label
-                                                    class="form-label text-muted small fw-bold text-uppercase">Confirm
-                                                    New PIN</label>
-                                                <input type="password" class="form-control"
-                                                    ng-model="pinData.confirmPin" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="text-danger mt-2 small" ng-show="pinChangeError">{{pinErrorMsg}}
-                                        </div>
-                                        <div class="text-success mt-2 small" ng-show="pinChangeSuccess">PIN changed
-                                            successfully!</div>
-
-                                        <div class="mt-4 text-end">
-                                            <button type="submit" class="btn btn-primary px-4"
-                                                ng-disabled="isChangingPin">
-                                                <span ng-if="!isChangingPin">Update PIN</span>
-                                                <span ng-if="isChangingPin"><i
-                                                        class="fa-solid fa-spinner fa-spin me-2"></i>Updating...</span>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 mx-auto">
+      <div class="card shadow border-0 rounded-4">
+        <div
+          class="card-header bg-primary text-white text-center py-4 rounded-top-4"
+        >
+          <h3 class="mb-0">
+            <i class="fa-solid fa-address-card me-2"></i>User Profile
+          </h3>
         </div>
+        <div class="container py-5">
+          <div class="row g-4 justify-content-center">
+            <div class="col-12 col-lg-4">
+              <div class="card border-0 shadow-sm h-100 rounded-4">
+                <div class="card-body p-4 text-center">
+                  <div class="position-relative d-inline-block mb-3">
+                    <img
+                      src="https://ui-avatars.com/api/?name={{currUser.name}}&background=random&size=128"
+                      alt="Profile avatar"
+                      class="rounded-circle border border-4 border-white shadow"
+                      style="
+                        width: 120px;
+                        height: 120px;
+                        object-fit: cover;
+                        background-color: #f8f9fa;
+                      "
+                    />
+                  </div>
+
+                  <h3 class="fw-bold mb-1">{{currUser.name}}</h3>
+
+                  <div class="mb-4">
+                    <span
+                      class="badge rounded-pill px-3 py-2 border fw-semibold text-capitalize shadow-sm"
+                      ng-class="currUser.role === 'admin' ? 'bg-primary-subtle text-primary' : 'bg-success-subtle text-success'"
+                    >
+                      <i
+                        class="fa-solid me-1"
+                        ng-class="currUser.role === 'admin' ? 'fa-user-shield' : 'fa-user'"
+                      ></i>
+                      {{currUser.role}}
+                    </span>
+                  </div>
+
+                  <div class="p-3 bg-light rounded-3 border text-center">
+                    <small
+                      class="text-muted d-block mb-1 text-uppercase fw-bold"
+                      style="font-size: 0.7rem; letter-spacing: 1px"
+                    >
+                      <i class="fa-solid fa-id-badge me-1"></i> Username
+                    </small>
+                    <span class="fs-6 fw-bold text-dark"
+                      >{{currUser.userName || currUser.name}}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <div class="card border-0 shadow-sm h-100 rounded-4">
+                <div class="card-body p-4">
+                  <div class="d-flex align-items-center mb-4">
+                    <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                      <i class="fa-solid fa-key text-primary fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold mb-0">Security Settings</h5>
+                  </div>
+
+                  <form ng-submit="changePin()" class="row g-3">
+                    <div class="col-12">
+                      <label
+                        class="form-label text-muted small fw-bold text-uppercase"
+                        >Current PIN</label
+                      >
+                      <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0"
+                          ><i class="fa-solid fa-lock text-muted"></i
+                        ></span>
+                        <input
+                          type="password"
+                          class="form-control border-start-0 ps-0"
+                          ng-model="pinData.currentPin"
+                          required
+                          placeholder="••••"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label
+                        class="form-label text-muted small fw-bold text-uppercase"
+                        >New PIN</label
+                      >
+                      <input
+                        type="password"
+                        class="form-control"
+                        ng-model="pinData.newPin"
+                        required
+                        placeholder="••••"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label
+                        class="form-label text-muted small fw-bold text-uppercase"
+                        >Confirm PIN</label
+                      >
+                      <input
+                        type="password"
+                        class="form-control"
+                        ng-model="pinData.confirmPin"
+                        required
+                        placeholder="••••"
+                      />
+                    </div>
+
+                    <div class="col-12 mt-3">
+                      <div
+                        class="alert alert-danger py-2 small mb-0"
+                        ng-show="pinChangeError"
+                      >
+                        <i class="fa-solid fa-circle-exclamation me-2"></i
+                        >{{pinErrorMsg}}
+                      </div>
+                      <div
+                        class="alert alert-success py-2 small mb-0"
+                        ng-show="pinChangeSuccess"
+                      >
+                        <i class="fa-solid fa-circle-check me-2"></i> PIN
+                        updated successfully!
+                      </div>
+                    </div>
+
+                    <div class="col-12 mt-4 text-end">
+                      <button
+                        type="submit"
+                        class="btn btn-primary px-5 fw-bold"
+                        ng-disabled="isChangingPin"
+                      >
+                        <span ng-if="!isChangingPin">Update PIN</span>
+                        <span ng-if="isChangingPin">
+                          <i class="fa-solid fa-spinner fa-spin me-2"></i
+                          >Updating...
+                        </span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
