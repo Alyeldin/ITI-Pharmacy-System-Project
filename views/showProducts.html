@@ -221,8 +221,8 @@
 
                   <td class="text-center px-3">
                     <div ng-if="!product.isEditing">{{product.expiryDate | date:'yyyy-MM-dd'}}</div>
-                    <input ng-if="product.isEditing" type="date" class="form-control form-control-sm"
-                      ng-model="product.expiryDate">
+                    <div ng-if="product.isEditing" class="text-secondary fst-italic " ng-model="product.expiryDate">
+                      {{product.expiryDate | date:'yyyy-MM-dd'}}</div>
                   </td>
 
                   <td class="text-end px-3">
