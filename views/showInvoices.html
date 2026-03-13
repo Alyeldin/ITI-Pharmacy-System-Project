@@ -71,6 +71,8 @@
                     Customer
                   </th>
                   <th class="py-3 px-4 text-secondary text-uppercase text-end"
+                    style="font-size: 0.75rem; font-weight: 700;">Invoice Date</th>
+                  <th class="py-3 px-4 text-secondary text-uppercase text-end"
                     style="font-size: 0.85rem; font-weight: 600">
                     Items Count
                   </th>
@@ -100,6 +102,10 @@
                       </div>
                       {{ invoice.customerName || 'N/A' }}
                     </div>
+                  </td>
+                  <td class="px-4 py-3 text-end text-muted small">
+                    <i class="fa-regular fa-calendar-days me-1"></i>
+                    {{ invoice.created_at | date:'mediumDate' }}
                   </td>
                   <td class="px-4 py-3 text-end fw-medium text-secondary">
                     {{ (invoice.invoiceItems.length || 0) }} items
